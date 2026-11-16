@@ -9,9 +9,11 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
+
+// AndroidViewModel responsável por gerenciar e expor os dados persistidos de livros à interface utilizando o contexto da aplicação
 class LivrosViewModel(app: Application) : AndroidViewModel(app) {
 
-    // Flow do Room (executado em coroutine, fora da thread principal)
+    // Converte o fluxo reativo (Flow) do Room em um StateFlow vinculado ao viewModelScope, mantendo a assinatura ativa por 5 segundos após a saída dos observadores
     val livros: StateFlow<List<Livro>> = AppDatabase.get(app)
         .livroDao()
         .listar()

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!-- INTERNET: permite que o aplicativo acesse a rede. -->
     <application
         android:allowBackup="true"
         android:label="App Room + Retrofit"
@@ -19,3 +19,8 @@
     </application>
 
 </manifest>
+    <!-- label: define o nome exibido abaixo do ícone. -->
+    <!-- theme: utiliza um tema nativo do Android sem barra de título. -->
+    <!-- Activity: registra a tela principal do aplicativo. -->
+    <!-- exported="true": permite que o sistema abra a Activity. -->
+    <!-- MAIN + LAUNCHER: definem a Activity como tela inicial do aplicativo. -->
