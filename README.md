@@ -1,6 +1,6 @@
 # App Room + Retrofit
 
-Aplicativo Android em **Kotlin** que exibe dados de duas origens: um **banco de dados local** e uma **API na internet**. Foi desenvolvido como atividade prática de integração entre banco de dados, API e Coroutines.
+Aplicativo Android em **Kotlin** que exibe dados de duas origens: um **banco de dados local** e uma **API na internet**.
 
 ## O que é o app
 
