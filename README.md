@@ -1,50 +1,43 @@
-App Room + Retrofit
+# App Room + Retrofit
 
-Aplicativo Android feito em Kotlin que mostra dados vindos de duas origens diferentes: o banco de dados do próprio aparelho e uma API na internet. Foi desenvolvido como atividade prática para integrar banco de dados local, consumo de API e Coroutines.
+Aplicativo Android em **Kotlin** que exibe dados de duas origens: um **banco de dados local** e uma **API na internet**. Foi desenvolvido como atividade prática de integração entre banco de dados, API e Coroutines.
 
-O que o app faz
+## O que é o app
 
-O app tem duas telas, acessadas por um menu na parte de baixo:
+Tem duas telas, acessadas por um menu inferior:
 
-Tela	O que mostra	De onde vêm os dados
-Livros	Título, autor e ano de cada livro	Banco de dados local (Room), tabela livros
-Álbuns	Título, número e usuário de cada álbum	API na internet (Retrofit), rota GET /albums
+- **Livros:** lista de livros (título, autor e ano) lida do banco de dados do aparelho.
+- **Álbuns:** lista de álbuns (título, número e usuário) obtida de uma API na internet.
 
-As telas só exibem dados: não há cadastro nem atualização de informações.
+As telas apenas exibem dados, sem cadastro nem atualização.
 
-O que é cada coisa
+## Banco de dados
 
-API: é um serviço na internet que entrega dados quando o app pede. O app envia uma requisição para um endereço (por exemplo, https://jsonplaceholder.typicode.com/albums) e recebe uma resposta com os dados. A API usada aqui é a JSONPlaceholder, uma API gratuita criada para testes, cujos dados são fictícios.
+- **Room**, biblioteca do Android que funciona sobre o **SQLite**.
+- Tabela `livros` (entidade `Livro`), com `id`, `titulo`, `autor` e `ano`.
+- Os livros iniciais são inseridos na primeira vez que o app abre, e a leitura funciona sem internet.
 
-Rota (endpoint): é o caminho específico dentro da API que entrega um tipo de dado. A rota /albums entrega a lista de álbuns. Outras rotas da mesma API entregam outros dados, como /posts e /users.
+## API
 
-JSON: é o formato em que a API responde, um texto organizado em chave e valor. Exemplo: {"userId": 1, "id": 1, "title": "quidem molestiae enim"}.
+- **JSONPlaceholder** (`https://jsonplaceholder.typicode.com`), uma API pública e gratuita para testes, com dados fictícios.
+- Rota usada: `GET /albums`, consumida com **Retrofit** e convertida de JSON para objetos Kotlin com **Gson**.
 
-Retrofit: biblioteca que faz a requisição à API e converte o JSON recebido em objetos Kotlin (a conversão é feita pelo conversor Gson). Com ele, buscar os álbuns vira a chamada de uma função.
+## Tecnologias e ferramentas
 
-Banco de dados local: é onde o app guarda informações dentro do próprio aparelho. Funciona sem internet e os dados permanecem salvos mesmo se o app for fechado.
+- **Kotlin**, linguagem do projeto
+- **Jetpack Compose** (Material 3), para as telas
+- **Room**, para o banco local
+- **Retrofit + Gson**, para a API
+- **Coroutines e Flow**, para executar banco e API sem travar a tela
+- **ViewModel**, para guardar o estado de cada tela
+- **KSP**, que gera o código do Room na compilação
+- **Gradle**, para configurar e compilar
+- **GitHub Actions**, que gera o APK automaticamente a cada push
+- **Android Studio**, como ambiente de desenvolvimento
 
-Room: biblioteca que facilita o uso do banco de dados do Android (SQLite). Ela é formada por três partes:
+## Como executar
 
-Entity (Livro): a classe que vira uma tabela; cada propriedade é uma coluna.
-DAO (LivroDao): a interface com as consultas ao banco.
-Database (AppDatabase): o banco em si, que também insere os livros iniciais na primeira vez que o app abre.
+- **Android Studio:** abra a pasta do projeto, aguarde o Gradle Sync e clique em Run ▶.
+- **GitHub:** o workflow **Build APK** (aba *Actions*) gera o APK em *Artifacts*.
 
-Coroutines: é a forma de executar tarefas demoradas, como acessar o banco ou a internet, sem travar a tela. O app usa suspend (função que pode esperar a resposta e continuar depois) e Flow (fluxo que entrega os dados e se atualiza quando eles mudam).
-
-ViewModel: guarda o estado de cada tela e faz a ligação entre a tela e os dados. Ele mantém as informações mesmo quando o aparelho é girado.
-
-Jetpack Compose: forma moderna de criar telas no Android, escrevendo a interface apenas em Kotlin, sem arquivos XML.
-
-Gradle: ferramenta que configura e compila o projeto. GitHub Actions é o serviço que compila o app automaticamente no GitHub a cada envio de código e gera o APK.
-
-Como o app funciona
-Tela (Compose)  →  ViewModel  →  Fonte de dados (Room ou Retrofit)
-Livros: tabela livros → LivroDao → LivrosViewModel → LivrosScreen
-Álbuns: API /albums → ApiService → AlbunsViewModel → AlbunsScreen
-
-Na tela Álbuns, enquanto a resposta não chega aparece um indicador de carregamento. Se der erro (por exemplo, sem internet), aparece uma mensagem com o botão "Tentar novamente".
-
-Como executar
-Android Studio: abra a pasta do projeto, aguarde o Gradle Sync e clique em Run ▶ com um celular conectado ou um emulador.
-GitHub: a cada push, o workflow Build APK (aba Actions) gera o APK em Artifacts, que pode ser instalado em um aparelho Android.
+A tela Álbuns precisa de internet.
